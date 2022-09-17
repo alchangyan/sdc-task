@@ -1,27 +1,30 @@
-import { FC, useState, useCallback } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
 
-import { stringToColor } from '../../utils/helpers';
-import { useStore } from '../../store';
+import Sidebar from '../Sidebar';
 
-const Header: FC<{}> = () => {
+import { stringAvatar } from '../../utils/helpers';
+import { useStore, UsersContextType } from '../../store';
+
+const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);
-  const { currentUser, users, dispatch } = useStore('users');
-  console.log(currentUser, users);
+
+  const { activeUserId, users } = useStore('users') as UsersContextType;
 
   const toggleSidebar = useCallback(() => {
     setIsOpenSidebar(prevState => !prevState);
-    dispatch && dispatch({ type: 'test' });
-  }, [dispatch]);
+  }, []);
+
+  const currentUserData = useMemo(() => {
+    return users.find(({ id }) => activeUserId === id);
+  }, [activeUserId, users]);
 
   return (
     <>
@@ -37,22 +40,13 @@ const Header: FC<{}> = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Switch User">
               <IconButton onClick={toggleSidebar} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: stringToColor('name') }}>N</Avatar>
+                <Avatar {...stringAvatar(currentUserData?.name || '')} />
               </IconButton>
             </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="right" open={isOpenSidebar} onClose={toggleSidebar}>
-        <Box sx={{ p: '20px 8px' }}>
-          <Button sx={{ mt: 1 }} variant="outlined" fullWidth>
-            John Doe
-          </Button>
-          <Button sx={{ mt: 1 }} variant="outlined" fullWidth>
-            John Doe
-          </Button>
-        </Box>
-      </Drawer>
+      <Sidebar isOpen={isOpenSidebar} onToggle={toggleSidebar} />
     </>
   );
 };

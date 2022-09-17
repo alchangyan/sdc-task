@@ -1,4 +1,4 @@
-export function stringToColor(string: string) {
+function stringToColor(string: string) {
   let hash = 0;
   let i;
 
@@ -6,7 +6,7 @@ export function stringToColor(string: string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = "#";
+  let color = '#';
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -14,4 +14,19 @@ export function stringToColor(string: string) {
   }
 
   return color;
+}
+
+export function stringAvatar(name: string) {
+  if (!name) return {};
+
+  const splittedName = name.toUpperCase().split(' ');
+
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${splittedName[0][0]}${
+      splittedName[1] ? splittedName[1][0] : ''
+    }`,
+  };
 }

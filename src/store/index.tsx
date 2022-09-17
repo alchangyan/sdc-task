@@ -9,6 +9,7 @@ import DataProvider, {
   dataReducer,
   defaultState as defaultDataState,
   DataContextType,
+  DataItemType,
 } from './data';
 
 type StoreTypes = 'users' | 'data';
@@ -39,9 +40,9 @@ const RootProvider: FC<{ children: any }> = ({ children }) => {
   );
 };
 
-interface GlobalStoreType extends UsersContextType, DataContextType {}
-
-const useStore = (store: StoreTypes): Partial<GlobalStoreType> => {
+const useStore = (
+  store: StoreTypes,
+): UsersContextType | DataContextType | {} => {
   const usersStore = useContext(UsersProvider);
   const dataStore = useContext(DataProvider);
 
@@ -49,7 +50,15 @@ const useStore = (store: StoreTypes): Partial<GlobalStoreType> => {
     case 'users':
       return usersStore;
     case 'data':
-      return dataStore;
+      let activeDataItem: DataItemType[] = [];
+
+      if (usersStore.activeUserId) {
+        activeDataItem = dataStore.data[usersStore.activeUserId];
+      }
+      return {
+        ...dataStore,
+        activeDataItem,
+      };
     default:
       console.warn(`Requested store doesn't exist`);
       return {};
@@ -57,5 +66,6 @@ const useStore = (store: StoreTypes): Partial<GlobalStoreType> => {
 };
 
 export { useStore };
+export type { UsersContextType };
 
 export default RootProvider;

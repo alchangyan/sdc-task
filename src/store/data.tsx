@@ -7,17 +7,19 @@ type DataItemType = {
   user: number;
 };
 
+type DataType = {
+  [userId: string]: DataItemType[];
+};
+
 type DataStoreType = {
-  data: DataItemType[];
+  data: DataType;
 };
 
 interface DataContextType extends DataStoreType {
   dispatch: Dispatch<any>;
 }
 
-const storedData: DataItemType[] = JSON.parse(
-  localStorage.getItem('data') || '[]',
-);
+const storedData: DataType = JSON.parse(localStorage.getItem('data') || '{}');
 
 const defaultState: DataStoreType = {
   data: storedData,
