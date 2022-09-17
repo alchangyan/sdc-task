@@ -1,40 +1,12 @@
-import { createContext, Dispatch } from 'react';
+import { createContext } from 'react';
+import { DataContextType, DataItemType } from '../types/global-types';
 
-type DataItemType = {
-  type: string;
-  status: string;
-  description: string;
-  user: number;
-};
-
-type DataType = {
-  [userId: string]: DataItemType[];
-};
-
-type DataStoreType = {
-  data: DataType;
-};
-
-interface DataContextType extends DataStoreType {
-  dispatch: Dispatch<any>;
-}
-
-const storedData: DataType = JSON.parse(localStorage.getItem('data') || '{}');
-
-const defaultState: DataStoreType = {
-  data: storedData,
-};
+const defaultData: DataItemType[] = JSON.parse(localStorage.getItem('data') || '[]');
 
 const DataContext = createContext<DataContextType>({
-  ...defaultState,
-  dispatch: () => {},
+  data: defaultData,
+  setData: () => {},
 });
 
-const dataReducer = (store: DataStoreType, action: any) => {
-  console.log(action);
-  return store;
-};
-
-export type { DataStoreType, DataItemType, DataContextType };
-export { defaultState, dataReducer };
+export { defaultData };
 export default DataContext;

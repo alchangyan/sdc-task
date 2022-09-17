@@ -69,7 +69,6 @@ const CreateButton: FC<CreateButtonProps> = ({
     <ClickAwayListener onClickAway={handleClickAway}>
       <div>
         <IconButton
-          sx={{ mt: '10px' }}
           color="primary"
           component={Link}
           onClick={toggleInputVisibility}

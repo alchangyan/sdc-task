@@ -11,12 +11,12 @@ import Tooltip from '@mui/material/Tooltip';
 import Sidebar from '../Sidebar';
 
 import { stringAvatar } from '../../utils/helpers';
-import { useStore, UsersContextType } from '../../store';
+import { useStore } from '../../store';
 
 const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);
 
-  const { activeUserId, users } = useStore('users') as UsersContextType;
+  const { activeUserId, users } = useStore();
 
   const toggleSidebar = useCallback(() => {
     setIsOpenSidebar(prevState => !prevState);

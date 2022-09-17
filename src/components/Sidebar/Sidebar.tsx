@@ -12,7 +12,13 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 import CreateButton from '../CreateButton';
 
-import { useStore, UsersContextType } from '../../store';
+import { useStore } from '../../store';
+import {
+  CREATE_USER,
+  SET_ACTIVE_USER,
+  DELETE_USER,
+} from '../../store/actionTypes';
+import {} from '../../store/';
 
 type SidebarProps = {
   isOpen: boolean;
@@ -22,9 +28,7 @@ type SidebarProps = {
 const Sidebar: FC<SidebarProps> = ({ isOpen, onToggle }) => {
   const [newUser, setNewUser] = useState<string>('');
 
-  const { activeUserId, users, dispatch } = useStore(
-    'users',
-  ) as UsersContextType;
+  const { activeUserId, users, dispatch } = useStore();
 
   const handleToggle = useCallback(() => {
     setNewUser('');
@@ -32,7 +36,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onToggle }) => {
   }, [onToggle]);
 
   const handleSubmit = useCallback(() => {
-    dispatch && dispatch({ type: 'add user', payload: newUser });
+    dispatch(CREATE_USER, newUser);
   }, [newUser, dispatch]);
 
   const handleUserClick: MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -41,7 +45,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onToggle }) => {
       let { id } = e.target.dataset;
 
       if (id !== activeUserId) {
-        dispatch && dispatch({ type: 'set active user', payload: id });
+        dispatch(SET_ACTIVE_USER, id);
         handleToggle();
       }
     },
@@ -53,7 +57,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onToggle }) => {
       // @ts-ignore
       const { id } = e.currentTarget.dataset;
 
-      dispatch && dispatch({ type: 'delete user', payload: id });
+      dispatch(DELETE_USER, id);
     },
     [dispatch],
   );

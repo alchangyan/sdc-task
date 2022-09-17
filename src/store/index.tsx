@@ -1,37 +1,42 @@
-import { FC, useContext, useReducer } from 'react';
+import { FC, useCallback, useContext, useMemo, useState } from 'react';
 
-import UsersProvider, {
-  usersReducer,
-  defaultState as defaultUsersState,
-  UsersContextType,
-} from './users';
-import DataProvider, {
-  dataReducer,
-  defaultState as defaultDataState,
-  DataContextType,
-  DataItemType,
-} from './data';
+import UsersProvider, { defaultActiveUserId, defaultUsers } from './users';
 
-type StoreTypes = 'users' | 'data';
+import { createUser, setActiveUser, deleteUser } from './actions/users';
+import { addCard } from './actions/data';
+import {
+  CREATE_USER,
+  SET_ACTIVE_USER,
+  DELETE_USER,
+  ADD_CARD,
+} from './actionTypes';
+import DataProvider, { defaultData } from './data';
+
+import {
+  StoreType,
+  UseStoreType,
+  CustomDispatchType,
+  SettersType,
+} from '../types/global-types';
 
 const RootProvider: FC<{ children: any }> = ({ children }) => {
-  const [usersState, dispatchUsers] = useReducer(
-    usersReducer,
-    defaultUsersState,
-  );
-  const [dataState, dispatchData] = useReducer(dataReducer, defaultDataState);
+  const [activeUserId, setActiveUserId] = useState(defaultActiveUserId);
+  const [users, setUsers] = useState(defaultUsers);
+  const [data, setData] = useState(defaultData);
 
   return (
     <UsersProvider.Provider
       value={{
-        ...usersState,
-        dispatch: dispatchUsers,
+        users,
+        activeUserId,
+        setUsers,
+        setActiveUserId,
       }}
     >
       <DataProvider.Provider
         value={{
-          ...dataState,
-          dispatch: dispatchData,
+          data,
+          setData,
         }}
       >
         {children}
@@ -40,32 +45,63 @@ const RootProvider: FC<{ children: any }> = ({ children }) => {
   );
 };
 
-const useStore = (
-  store: StoreTypes,
-): UsersContextType | DataContextType | {} => {
-  const usersStore = useContext(UsersProvider);
-  const dataStore = useContext(DataProvider);
+const useStore = (): UseStoreType => {
+  const { activeUserId, users, setActiveUserId, setUsers } =
+    useContext(UsersProvider);
+  const { data, setData } = useContext(DataProvider);
 
-  switch (store) {
-    case 'users':
-      return usersStore;
-    case 'data':
-      let activeDataItem: DataItemType[] = [];
+  const setters: SettersType = useMemo(
+    () => ({
+      setActiveUserId,
+      setUsers,
+      setData,
+    }),
+    [setActiveUserId, setUsers, setData],
+  );
 
-      if (usersStore.activeUserId) {
-        activeDataItem = dataStore.data[usersStore.activeUserId];
+  const store: StoreType = useMemo(
+    () => ({
+      activeUserId,
+      users,
+      data,
+    }),
+    [activeUserId, users, data],
+  );
+
+  const dispatch: CustomDispatchType = useCallback(
+    (action, data) => {
+      switch (action) {
+        case CREATE_USER:
+          createUser(store, setters, data);
+          break;
+        case SET_ACTIVE_USER:
+          setActiveUser(setters, data);
+          break;
+        case DELETE_USER:
+          deleteUser(store, setters, data);
+          break;
+        case ADD_CARD:
+          addCard(store, setters, data);
+          break;
+        default:
+          break;
       }
-      return {
-        ...dataStore,
-        activeDataItem,
-      };
-    default:
-      console.warn(`Requested store doesn't exist`);
-      return {};
-  }
+    },
+    [setters, store],
+  );
+
+  const currentUserCards = useMemo(() => {
+    console.log(data);
+    return data.filter(({ user }) => user === activeUserId);
+  }, [activeUserId, data]);
+
+  return {
+    ...store,
+    currentUserCards,
+    dispatch,
+  };
 };
 
 export { useStore };
-export type { UsersContextType };
 
 export default RootProvider;

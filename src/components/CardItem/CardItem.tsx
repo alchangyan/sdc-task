@@ -1,17 +1,23 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import CardContent from "@mui/material/CardContent";
-import { styled } from "@mui/material/styles";
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import { styled } from '@mui/material/styles';
 
+import './CardItem.scss';
 const StyledCardContent = styled(CardContent)(`
   &:last-child {
     padding-bottom: 16px;
   }
 `);
 
-const CardItem: FC<{}> = () => {
+type CardItemProps = {
+  id: string;
+  description: string;
+};
+
+const CardItem: FC<CardItemProps> = ({ id, description }) => {
   return (
     <div className="card-item">
       <Card variant="outlined">
@@ -21,7 +27,7 @@ const CardItem: FC<{}> = () => {
             variant="caption"
             color="text.secondary"
           >
-            Word of the Day
+            {description}
           </Typography>
         </StyledCardContent>
       </Card>
