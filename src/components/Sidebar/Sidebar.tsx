@@ -12,13 +12,12 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 import CreateButton from '../CreateButton';
 
-import { useStore } from '../../store';
+import useStore from '../../hooks/useStore';
 import {
   CREATE_USER,
   SET_ACTIVE_USER,
   DELETE_USER,
 } from '../../store/actionTypes';
-import {} from '../../store/';
 
 type SidebarProps = {
   isOpen: boolean;

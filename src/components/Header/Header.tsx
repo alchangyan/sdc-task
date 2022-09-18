@@ -11,7 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Sidebar from '../Sidebar';
 
 import { stringAvatar } from '../../utils/helpers';
-import { useStore } from '../../store';
+import useStore from '../../hooks/useStore';
 
 const Header = () => {
   const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);

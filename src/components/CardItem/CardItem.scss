@@ -1,3 +1,10 @@
 .card-item {
   margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+
+  &_dragging {
+    border-color: gray;
+  }
 }

@@ -6,7 +6,7 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 
 import CardItem from '../CardItem';
 import CreateButton from '../CreateButton';
-import { useStore } from '../../store';
+import useStore from '../../hooks/useStore';
 import { ADD_CARD } from '../../store/actionTypes';
 
 type ColumnProps = {
@@ -16,11 +16,11 @@ type ColumnProps = {
 
 const Column: FC<ColumnProps> = ({ title, status: columnStatus }) => {
   const [newCardDescription, setNewCardDescription] = useState('');
-  const { currentUserCards, dispatch } = useStore();
+  const { userCards, dispatch } = useStore();
 
   const columnCards = useMemo(() => {
-    return currentUserCards.filter(({ status }) => status === columnStatus);
-  }, [currentUserCards, columnStatus]);
+    return userCards.filter(({ status }) => status === columnStatus);
+  }, [userCards, columnStatus]);
 
   const handleSubmitNewCard = useCallback(() => {
     dispatch(ADD_CARD, {

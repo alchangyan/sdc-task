@@ -46,6 +46,6 @@ export type SettersType = {
 
 export type UseStoreType = UsersStoreType &
   DataStoreType & {
-    currentUserCards: DataItemType[];
+    userCards: DataItemType[];
     dispatch: CustomDispatchType;
   };
