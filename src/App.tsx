@@ -6,9 +6,15 @@ import MainLayout from './layouts/Main';
 // Components
 import Column from './components/Column';
 
-import './App.css';
+// Types
+import type { ColumnStatusType } from './types/global-types';
 
-const columns = [
+type ColumnType = {
+  status: ColumnStatusType;
+  title: string;
+};
+
+const columns: ColumnType[] = [
   { status: 'to do', title: 'To Do' },
   { status: 'doing', title: 'Doing' },
   { status: 'done', title: 'Done' },

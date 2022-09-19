@@ -7,4 +7,17 @@
   &_dragging {
     border-color: gray;
   }
+
+  &_inactive {
+    border-width: 0px;
+    border-color: transparent;
+    height: 0;
+    margin-bottom: 0px;
+  }
+
+  &_placeholder {
+    & > * {
+      visibility: hidden;
+    }
+  }
 }

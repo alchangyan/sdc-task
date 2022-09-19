@@ -1,15 +1,22 @@
 import { useCallback, useContext, useMemo } from 'react';
 
 import { createUser, setActiveUser, deleteUser } from '../store/actions/users';
-import { addCard } from '../store/actions/data';
+import { addCard, moveCard } from '../store/actions/data';
 import {
   CREATE_USER,
   SET_ACTIVE_USER,
   DELETE_USER,
   ADD_CARD,
+  MOVE_CARD,
+  SET_DRAGGING_ACTIVE,
+  SET_DRAGGING_INACTIVE,
+  SET_DRAGGING_CARD_ID,
+  ADD_COLUMN,
+  SET_CARD_DESTINATION,
 } from '../store/actionTypes';
 import DataProvider from '../store/data';
 import UsersProvider from '../store/users';
+import DragNDropProvider from '../store/dragNDrop';
 
 import {
   StoreType,
@@ -22,14 +29,36 @@ const useStore = (): UseStoreType => {
   const { activeUserId, users, setActiveUserId, setUsers } =
     useContext(UsersProvider);
   const { data, setData } = useContext(DataProvider);
+  const {
+    isDraggingActive,
+    draggingCardId,
+    columns,
+    newDestination,
+    setIsDraggingActive,
+    setDraggingCardId,
+    setColumns,
+    setNewDestination,
+  } = useContext(DragNDropProvider);
 
   const setters: SettersType = useMemo(
     () => ({
       setActiveUserId,
       setUsers,
       setData,
+      setIsDraggingActive,
+      setDraggingCardId,
+      setColumns,
+      setNewDestination,
     }),
-    [setActiveUserId, setUsers, setData],
+    [
+      setActiveUserId,
+      setUsers,
+      setData,
+      setIsDraggingActive,
+      setDraggingCardId,
+      setColumns,
+      setNewDestination,
+    ],
   );
 
   const store: StoreType = useMemo(
@@ -37,8 +66,20 @@ const useStore = (): UseStoreType => {
       activeUserId,
       users,
       data,
+      isDraggingActive,
+      draggingCardId,
+      columns,
+      newDestination,
     }),
-    [activeUserId, users, data],
+    [
+      activeUserId,
+      users,
+      data,
+      isDraggingActive,
+      draggingCardId,
+      columns,
+      newDestination,
+    ],
   );
 
   const dispatch: CustomDispatchType = useCallback(
@@ -56,11 +97,36 @@ const useStore = (): UseStoreType => {
         case ADD_CARD:
           addCard(store, setters, data);
           break;
+        case MOVE_CARD:
+          moveCard(store, setters, data);
+          break;
+        case SET_DRAGGING_ACTIVE:
+          setIsDraggingActive(true);
+          break;
+        case SET_DRAGGING_INACTIVE:
+          setIsDraggingActive(false);
+          break;
+        case SET_DRAGGING_CARD_ID:
+          setDraggingCardId(data);
+          break;
+        case ADD_COLUMN:
+          setColumns(prevState => [...prevState, data]);
+          break;
+        case SET_CARD_DESTINATION:
+          setNewDestination(data);
+          break;
         default:
           break;
       }
     },
-    [setters, store],
+    [
+      setters,
+      store,
+      setIsDraggingActive,
+      setDraggingCardId,
+      setColumns,
+      setNewDestination,
+    ],
   );
 
   const userCards = useMemo(() => {

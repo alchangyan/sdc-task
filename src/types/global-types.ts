@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
+// Global
+export type ColumnStatusType = 'to do' | 'doing' | 'done' | null;
 
 // Data
 export type DataItemType = {
   id: string;
   type: string;
-  status: string;
+  status: ColumnStatusType;
   description: string;
   user: string;
 };
@@ -33,19 +35,42 @@ export interface UsersContextType extends UsersStoreType {
   setUsers: Dispatch<SetStateAction<UserType[]>>;
 }
 
-// Store
-export interface StoreType extends UsersStoreType, DataStoreType {}
+// Drag'N'Drop
+export type DragNDropStoreType = {
+  isDraggingActive: boolean;
+  draggingCardId: string | null;
+  columns: any[];
+  newDestination: ColumnStatusType;
+};
 
-export type CustomDispatchType = (action: string, payload: any) => void;
+export interface DragNDropContextType extends DragNDropStoreType {
+  setIsDraggingActive: Dispatch<SetStateAction<boolean>>;
+  setDraggingCardId: Dispatch<SetStateAction<string | null>>;
+  setColumns: Dispatch<SetStateAction<any[]>>;
+  setNewDestination: Dispatch<SetStateAction<ColumnStatusType>>;
+}
+
+// Store
+export interface StoreType
+  extends UsersStoreType,
+    DataStoreType,
+    DragNDropStoreType {}
+
+export type CustomDispatchType = (action: string, payload?: any) => void;
 
 export type SettersType = {
   setData: Dispatch<SetStateAction<DataItemType[]>>;
   setActiveUserId: Dispatch<SetStateAction<string | null>>;
   setUsers: Dispatch<SetStateAction<UserType[]>>;
+  setIsDraggingActive: Dispatch<SetStateAction<boolean>>;
+  setDraggingCardId: Dispatch<SetStateAction<string | null>>;
+  setColumns: Dispatch<SetStateAction<any[]>>;
+  setNewDestination: Dispatch<SetStateAction<ColumnStatusType>>;
 };
 
 export type UseStoreType = UsersStoreType &
-  DataStoreType & {
+  DataStoreType &
+  DragNDropStoreType & {
     userCards: DataItemType[];
     dispatch: CustomDispatchType;
   };

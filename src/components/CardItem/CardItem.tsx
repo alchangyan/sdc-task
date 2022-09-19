@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { FC, useMemo } from 'react';
 import cn from 'classnames';
 
 import Card from '@mui/material/Card';
@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
 import useDragNDrop from '../../hooks/useDragNDrop';
+import useStore from '../../hooks/useStore';
+import type { ColumnStatusType } from '../../types/global-types';
 
 import './CardItem.scss';
 
@@ -17,20 +19,37 @@ const StyledCardContent = styled(CardContent)(`
 
 type CardItemProps = {
   id: string;
+  status: ColumnStatusType;
   description: string;
+  asPlaceholder?: boolean;
 };
 
-const CardItem: FC<CardItemProps> = ({ id, description }) => {
-  const { cardStyles, handleMouseDown, isDraggingActive } = useDragNDrop();
+const CardItem: FC<CardItemProps> = ({
+  id,
+  status,
+  description,
+  asPlaceholder = false,
+}) => {
+  const { draggingCardId, newDestination, isDraggingActive } = useStore();
+  const { cardStyles, handleMouseDown } = useDragNDrop(
+    id,
+    status,
+    asPlaceholder,
+  );
+
+  const isDragging = useMemo(() => draggingCardId === id, [draggingCardId, id]);
 
   return (
     <div
       className={cn('card-item', {
-        'card-item_dragging': isDraggingActive,
+        'card-item_dragging': isDragging,
+        'card-item_inactive':
+          isDraggingActive && isDragging && !!newDestination && !asPlaceholder,
+        'card-item_placeholder': asPlaceholder,
       })}
     >
       <Card
-        sx={cardStyles}
+        sx={!asPlaceholder ? cardStyles : {}}
         variant="outlined"
         data-id={id}
         onMouseDown={handleMouseDown}
