@@ -1,12 +1,17 @@
 import { FC, useMemo } from 'react';
 import cn from 'classnames';
 
+// MUI Components
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
+
+// Store
 import useDragNDrop from '../../hooks/useDragNDrop';
 import useStore from '../../hooks/useStore';
+
+// Types
 import type { ColumnStatusType } from '../../types/global-types';
 
 import './CardItem.scss';

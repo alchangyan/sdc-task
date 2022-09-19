@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, ReactNode } from 'react';
 
 import DataProvider, { defaultData } from './data';
 import UsersProvider, { defaultActiveUserId, defaultUsers } from './users';
@@ -9,7 +9,7 @@ import DragNDropProvider, {
   defaultColumns,
 } from './dragNDrop';
 
-const RootProvider: FC<{ children: any }> = ({ children }) => {
+const RootProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [newDestination, setNewDestination] = useState(defaultNewDestination);
   const [isDraggingActive, setIsDraggingActive] = useState(
     defaultIsDraggingActive,

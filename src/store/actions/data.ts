@@ -1,7 +1,12 @@
-import { StoreType, SettersType, DataItemType } from '../../types/global-types';
+import {
+  StoreType,
+  SettersType,
+  DataItemType,
+  ColumnStatusType,
+} from '../../types/global-types';
 
 type AddCardPayloadType = {
-  columnStatus: any;
+  columnStatus: ColumnStatusType;
   description: string;
 };
 

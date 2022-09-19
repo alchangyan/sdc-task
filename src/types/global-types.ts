@@ -1,6 +1,12 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction, MutableRefObject } from 'react';
+
 // Global
 export type ColumnStatusType = 'to do' | 'doing' | 'done' | null;
+
+export type ColumnDataType = {
+  status: ColumnStatusType;
+  ref: MutableRefObject<HTMLDivElement>;
+};
 
 // Data
 export type DataItemType = {
@@ -39,14 +45,14 @@ export interface UsersContextType extends UsersStoreType {
 export type DragNDropStoreType = {
   isDraggingActive: boolean;
   draggingCardId: string | null;
-  columns: any[];
+  columns: ColumnDataType[];
   newDestination: ColumnStatusType;
 };
 
 export interface DragNDropContextType extends DragNDropStoreType {
   setIsDraggingActive: Dispatch<SetStateAction<boolean>>;
   setDraggingCardId: Dispatch<SetStateAction<string | null>>;
-  setColumns: Dispatch<SetStateAction<any[]>>;
+  setColumns: Dispatch<SetStateAction<ColumnDataType[]>>;
   setNewDestination: Dispatch<SetStateAction<ColumnStatusType>>;
 }
 
@@ -64,7 +70,7 @@ export type SettersType = {
   setUsers: Dispatch<SetStateAction<UserType[]>>;
   setIsDraggingActive: Dispatch<SetStateAction<boolean>>;
   setDraggingCardId: Dispatch<SetStateAction<string | null>>;
-  setColumns: Dispatch<SetStateAction<any[]>>;
+  setColumns: Dispatch<SetStateAction<ColumnDataType[]>>;
   setNewDestination: Dispatch<SetStateAction<ColumnStatusType>>;
 };
 

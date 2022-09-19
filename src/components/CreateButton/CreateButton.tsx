@@ -1,4 +1,4 @@
-import React, {
+import {
   FC,
   useState,
   useCallback,
@@ -7,11 +7,13 @@ import React, {
   ReactNode,
 } from 'react';
 
+// MUI Components
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
+// MUI Icons
 import CloseIcon from '@mui/icons-material/Close';
 
 type CreateButtonProps = {

@@ -1,5 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 
+// MUI Components
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -8,9 +9,13 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
+// Components
 import Sidebar from '../Sidebar';
 
+// Helpers
 import { stringAvatar } from '../../utils/helpers';
+
+// Store
 import useStore from '../../hooks/useStore';
 
 const Header = () => {

@@ -1,15 +1,18 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
+// MUI Components
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+// Store
 import StoreProvider from './store';
 
-import './index.css';
-
+// Components
 import App from './App';
 
-// const theme = createTheme({ palette: { mode: "dark" } });
+// Styles
+import './index.css';
+
 const theme = createTheme({ palette: { mode: 'light' } });
 
 const root = ReactDOM.createRoot(

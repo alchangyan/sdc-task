@@ -1,5 +1,6 @@
 import { FC, useState, useCallback, MouseEventHandler } from 'react';
 
+// MUI Components
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Drawer from '@mui/material/Drawer';
@@ -7,11 +8,14 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
+// MUI Icons
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
+// Components
 import CreateButton from '../CreateButton';
 
+// Store
 import useStore from '../../hooks/useStore';
 import {
   CREATE_USER,

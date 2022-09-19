@@ -1,7 +1,10 @@
-import type { FC, ReactNode } from "react";
+import type { FC, ReactNode } from 'react';
 
-import Header from "../../components/Header";
-import "./Main.scss";
+// Components
+import Header from '../../components/Header';
+
+// Styles
+import './Main.scss';
 
 type MainProps = { children?: ReactNode };
 

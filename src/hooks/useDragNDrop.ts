@@ -5,6 +5,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  MutableRefObject,
 } from 'react';
 import {
   SET_DRAGGING_ACTIVE,
@@ -55,11 +56,14 @@ const useDragNDrop = (
     newDestination: storedNewDestination,
   } = useStore();
 
-  const dispatch: any = useRef(null);
-  const columns: any = useRef(null);
-  const isActive: any = useRef(false);
-  const isDraggingActive: any = useRef(false);
-  const newDestination: any = useRef(false);
+  const dispatch: MutableRefObject<typeof stroredDispatch> =
+    useRef(stroredDispatch);
+  const columns: MutableRefObject<typeof stroredColumns> =
+    useRef(stroredColumns);
+  const isActive: MutableRefObject<boolean> = useRef(false);
+  const isDraggingActive: MutableRefObject<boolean> = useRef(false);
+  const newDestination: MutableRefObject<typeof storedNewDestination> =
+    useRef(storedNewDestination);
 
   dispatch.current = stroredDispatch;
   columns.current = stroredColumns;

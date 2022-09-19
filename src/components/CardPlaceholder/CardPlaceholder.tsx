@@ -1,8 +1,13 @@
 import { FC, useMemo } from 'react';
-import { ColumnStatusType, DataItemType } from '../../types/global-types';
+
+// Components
+import CardItem from '../CardItem';
+
+// Store
 import useStore from '../../hooks/useStore';
 
-import CardItem from '../CardItem';
+// Types
+import { ColumnStatusType, DataItemType } from '../../types/global-types';
 
 type CardPlaceholderProps = {
   columnStatus: ColumnStatusType;

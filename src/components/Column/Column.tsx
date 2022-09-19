@@ -8,15 +8,23 @@ import {
   MutableRefObject,
 } from 'react';
 
+// MUI Components
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+
+// MUI Icons
 import AddCardIcon from '@mui/icons-material/AddCard';
 
+// Components
 import CardItem from '../CardItem';
 import CreateButton from '../CreateButton';
 import CardPlaceholder from '../CardPlaceholder';
+
+// Store
 import useStore from '../../hooks/useStore';
 import { ADD_CARD, ADD_COLUMN } from '../../store/actionTypes';
+
+// Types
 import type { ColumnStatusType } from '../../types/global-types';
 
 type ColumnProps = {
