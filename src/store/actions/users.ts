@@ -1,5 +1,10 @@
-import { StoreType, SettersType } from '../../types/global-types';
+import type { StoreType, SettersType } from '../../types/global-types';
 
+/**
+ * I am using Date.now() to forget about unique IDs of the users while creation.
+ *
+ * ##
+ */
 export const createUser = (
   store: StoreType,
   { setUsers, setActiveUserId }: SettersType,
@@ -20,6 +25,11 @@ export const createUser = (
 
   setUsers(newUsers);
 
+  /**
+   * If this is the first user we made, it will be automatically marked as active one.
+   *
+   * ##
+   */
   if (newUsers.length === 1) {
     setActiveUserId(newUserId);
   }
@@ -38,7 +48,6 @@ export const deleteUser = (
   { setUsers, setData, setActiveUserId }: SettersType,
   userId: string,
 ) => {
-  // debugger;
   const newUsers = [...store.users];
   let newData = [...store.data];
 
@@ -53,9 +62,13 @@ export const deleteUser = (
   setUsers(newUsers);
   setData(newData);
 
+  /**
+   * If the user we just removed is an active one, I am removing active user from the storage as well, so user will chose which user will be active next.
+   *
+   * ##
+   */
   if (userId === store.activeUserId) {
     localStorage.removeItem('activeUserId');
     setActiveUserId(null);
-    return;
   }
 };

@@ -1,11 +1,16 @@
-import type { Dispatch, SetStateAction, MutableRefObject } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+/**
+ * Big part of the types are stored here except component proptypes and other small pieces those are not used by whole application.
+ *
+ * ##
+ */
 
 // Global
 export type ColumnStatusType = 'to do' | 'doing' | 'done' | null;
 
 export type ColumnDataType = {
   status: ColumnStatusType;
-  ref: MutableRefObject<HTMLDivElement>;
+  ref: HTMLDivElement;
 };
 
 // Data

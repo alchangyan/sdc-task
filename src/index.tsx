@@ -19,6 +19,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+/**
+ * This file contains default wrapper(StrictMode), MUI theme wrapper and custom wrapper(StoreProvider) for the global store(Context API).
+ *
+ * ##
+ */
+
 root.render(
   <StrictMode>
     <ThemeProvider theme={theme}>

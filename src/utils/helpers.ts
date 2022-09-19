@@ -1,3 +1,9 @@
+import { ColumnDataType } from '../types/global-types';
+/**
+ * Copied from MUI documentation for generation of random colors for active user icon.
+ *
+ * ##
+ */
 function stringToColor(string: string) {
   let hash = 0;
   let i;
@@ -16,6 +22,12 @@ function stringToColor(string: string) {
   return color;
 }
 
+/**
+ * Also copied from MUI documentation with small modification to be able to use single word usernames.
+ *
+ * ##
+ */
+
 export function stringAvatar(name: string) {
   if (!name) return {};
 
@@ -30,3 +42,33 @@ export function stringAvatar(name: string) {
     }`,
   };
 }
+
+/**
+ * Calculation of the column which was hovered while dragging a card.
+ * "Null" will be returned if the column which is hovered is the initial column of the dragging card.
+ *
+ * ##
+ */
+export const getDestination = (
+  columns: ColumnDataType[],
+  e: globalThis.MouseEvent,
+) => {
+  const { pageX, pageY } = e;
+  let destination = null;
+
+  // @ts-ignore
+  columns.forEach(({ status, ref }) => {
+    const { offsetTop, offsetLeft, offsetHeight, offsetWidth } = ref;
+
+    if (
+      pageX >= offsetLeft &&
+      pageX <= offsetLeft + offsetWidth &&
+      pageY >= offsetTop &&
+      pageY <= offsetTop + offsetHeight
+    ) {
+      destination = status;
+    }
+  });
+
+  return destination;
+};

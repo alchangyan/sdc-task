@@ -7,7 +7,7 @@ import CardItem from '../CardItem';
 import useStore from '../../hooks/useStore';
 
 // Types
-import { ColumnStatusType, DataItemType } from '../../types/global-types';
+import type { ColumnStatusType, DataItemType } from '../../types/global-types';
 
 type CardPlaceholderProps = {
   columnStatus: ColumnStatusType;

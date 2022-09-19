@@ -18,13 +18,20 @@ import DataProvider from '../store/data';
 import UsersProvider from '../store/users';
 import DragNDropProvider from '../store/dragNDrop';
 
-import {
+import type {
   StoreType,
   UseStoreType,
   CustomDispatchType,
   SettersType,
 } from '../types/global-types';
 
+/**
+ * Custom hook to have everything related to store in one place.
+ * Whole store is returned by using it.
+ * Also I am returning current user card and dispatch function which is explained below.
+ *
+ * ##
+ */
 const useStore = (): UseStoreType => {
   const { activeUserId, users, setActiveUserId, setUsers } =
     useContext(UsersProvider);
@@ -82,6 +89,12 @@ const useStore = (): UseStoreType => {
     ],
   );
 
+  /**
+   * Redux-like reducer.
+   * Special actions are used for more complex operations (like createUser, moveCard, etc.).
+   *
+   * ##
+   */
   const dispatch: CustomDispatchType = useCallback(
     (action, data) => {
       switch (action) {

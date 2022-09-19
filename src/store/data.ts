@@ -1,7 +1,14 @@
 import { createContext } from 'react';
-import { DataContextType, DataItemType } from '../types/global-types';
+import type { DataContextType, DataItemType } from '../types/global-types';
 
-const defaultData: DataItemType[] = JSON.parse(localStorage.getItem('data') || '[]');
+/**
+ * Getting default state of the data store
+ *
+ * ##
+ */
+const defaultData: DataItemType[] = JSON.parse(
+  localStorage.getItem('data') || '[]',
+);
 
 const DataContext = createContext<DataContextType>({
   data: defaultData,

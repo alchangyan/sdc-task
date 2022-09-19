@@ -9,6 +9,12 @@ import DragNDropProvider, {
   defaultColumns,
 } from './dragNDrop';
 
+/**
+ * Contains all the Context API providers to have them all in one place as a component.
+ * Also contains all the setters and initial values for stores.
+ *
+ * ##
+ */
 const RootProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [newDestination, setNewDestination] = useState(defaultNewDestination);
   const [isDraggingActive, setIsDraggingActive] = useState(
